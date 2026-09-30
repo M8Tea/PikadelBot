@@ -70,27 +70,17 @@
     <div class="header">سیستم توزیع پیکادل سرام</div>
 
     <div class="tabs">
-        <div class="tab active" onclick="switchTab('tab-gallery')">🖼 گالری</div>
-        <div class="tab" onclick="switchTab('tab-inventory')">📦 موجودی</div>
-        <div class="tab" onclick="switchTab('tab-catalog')">📚 کاتالوگ</div>
+        <div class="tab active" onclick="switchTab('tab-inventory')">📦 موجودی</div>
+        <!-- تب دوم ادغام شده است -->
+        <div class="tab" onclick="switchTab('tab-catalog')">📚 گالری و کاتالوگ</div>
         <div class="tab" onclick="switchTab('tab-calc')">🧮 محاسبه</div>
         <div class="tab" onclick="switchTab('tab-price')">📄 قیمت</div>
     </div>
 
     <div class="content-area">
-
-        <div id="tab-gallery" class="section active">
-            <div class="card">
-                <h3>🖼 جستجوی زنده تصاویر محصولات</h3>
-                <p>نام طرح یا سایز را تایپ کنید تا تصاویر برای شما در چت ارسال شود:</p>
-                <div class="form-group">
-                    <input type="text" id="photo-query" placeholder="مثال: کلکته، Panda، طوسی...">
-                </div>
-                <button class="action-btn photo-btn" onclick="sendPhotoSearch()">📸 دریافت تصاویر در چت</button>
-            </div>
-        </div>
         
-        <div id="tab-inventory" class="section">
+        <!-- ============ تب موجودی ============ -->
+        <div id="tab-inventory" class="section active">
             <div class="card">
                 <h3>🏢 آپادانا سرام</h3>
                 <div class="btn-grid">
@@ -121,9 +111,27 @@
             </div>
         </div>
 
+        <!-- ============ تب گالری و کاتالوگ (ادغام شده) ============ -->
         <div id="tab-catalog" class="section">
+            
+            <!-- بخش جستجوی عکس زنده (فارسی و انگلیسی) -->
             <div class="card">
-                <h3>🏢 آپادانا سرام (تفکیک بر اساس سایز)</h3>
+                <h3>🖼 گالری زنده تصاویر محصولات</h3>
+                <p>نام طرح یا سایز را تایپ کنید (فارسی یا انگلیسی):</p>
+                <div class="form-group">
+                    <input type="text" id="photo-query" list="photo-names" placeholder="جستجو... (مثال: کلکته یا Panda)">
+                    
+                    <!-- این بخش به صورت خودکار توسط پایتون با نام فایل‌های شما پر می‌شود -->
+                    <datalist id="photo-names">
+                    </datalist>
+
+                </div>
+                <button class="action-btn photo-btn" onclick="sendPhotoSearch()">📸 دریافت تصاویر در چت</button>
+            </div>
+
+            <!-- بخش کاتالوگ‌های PDF -->
+            <div class="card">
+                <h3>🏢 آپادانا سرام (کاتالوگ PDF)</h3>
                 <div class="btn-grid">
                     <button onclick="sendDownload('c_apa_3030')">📥 ۳۰ در ۳۰</button>
                     <button onclick="sendDownload('c_apa_4545')">📥 ۴۵ در ۴۵</button>
@@ -137,7 +145,6 @@
                     <button onclick="sendDownload('c_apa_wall')">📥 دیواری عمومی</button>
                 </div>
             </div>
-
             <div class="card">
                 <h3>🏢 سایر کارخانه‌ها</h3>
                 <div class="btn-grid" style="grid-template-columns: 1fr;">
@@ -148,6 +155,7 @@
             </div>
         </div>
 
+        <!-- ============ تب ماشین حساب ============ -->
         <div id="tab-calc" class="section">
             <div class="card">
                 <h3>🧮 محاسبه هوشمند پالت و متراژ</h3>
@@ -165,8 +173,8 @@
                             <option value="calc_apa_3030">۳۰x۳۰ آپادانا</option>
                             <option value="calc_apa_40120">۴۰x۱۲۰ آپادانا</option>
                             <option value="calc_apa_3060_por">۳۰x۶۰ پرسلانی آپادانا</option>
-                            <option value="calc_apa_3060w_8">۳۰x۶۰ دیواری (۸ برگی)</option>
-                            <option value="calc_apa_3060w_7">۳۰x۶۰ دیواری (۷ برگی)</option>
+                            <option value="calc_apa_3060w_8">۳۰x۶۰ دیواری زمینه (۸ برگی)</option>
+                            <option value="calc_apa_3060w_7">۳۰x۶۰ دیواری زمینه (۷ برگی)</option>
                             <option value="calc_apa_3060w_punch">۳۰x۶۰ دیواری پانچ</option>
                             <option value="calc_apa_3060_sig">۳۰x۶۰ سیگاری</option>
                             <option value="calc_apa_3090w_punch">۳۰x۹۰ دیواری پانچ</option>
@@ -203,41 +211,25 @@
             </div>
         </div>
 
+        <!-- ============ تب استعلام قیمت ============ -->
         <div id="tab-price" class="section">
             <div class="card">
                 <h3>🔍 استعلام زنده قیمت کالا</h3>
                 <p>نام طرح، سایز یا برند را تایپ کنید:</p>
                 <div class="form-group">
-                    <input type="text" id="search-query" list="tile-names" placeholder="جستجو... (مثلاً: کلکته)">
-                    <datalist id="tile-names">
+                    <!-- به صورت پیش‌فرض چند اسم پرکاربرد برای قیمت قرار داده شده است -->
+                    <input type="text" id="search-query" list="price-names" placeholder="جستجو... (مثلاً: کلکته یا آرمو)">
+                    <datalist id="price-names">
                         <option value="آرمو">
                         <option value="الوا">
                         <option value="ونتو">
-                        <option value="الگانزا">
-                        <option value="لیون">
-                        <option value="ایوورا">
                         <option value="رزتا">
                         <option value="دیموس">
-                        <option value="آکاشا">
-                        <option value="پترا">
-                        <option value="ولا">
-                        <option value="لدا">
-                        <option value="ماگو">
-                        <option value="نویر">
+                        <option value="پاندا">
                         <option value="سیه نا">
                         <option value="آمالفی">
-                        <option value="روملو">
-                        <option value="لودی">
-                        <option value="جنووا">
                         <option value="ولنتینو">
                         <option value="کلکته">
-                        <option value="پاندا">
-                        <option value="بوک مچ">
-                        <option value="مارمورا">
-                        <option value="سعدی">
-                        <option value="حافظ">
-                        <option value="ارم">
-                        <option value="آپادانا">
                     </datalist>
                 </div>
                 <button class="action-btn" onclick="sendSearch()">🔍 استعلام سریع قیمت</button>
