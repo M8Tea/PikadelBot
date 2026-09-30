@@ -18,8 +18,7 @@
         body {
             font-family: Tahoma, -apple-system, sans-serif;
             background-color: var(--bg); color: var(--text);
-            margin: 0; padding: 0;
-            display: flex; flex-direction: column; height: 100vh;
+            margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh;
         }
         .header {
             background-color: var(--primary); color: var(--primary-text);
@@ -194,9 +193,40 @@
         <div id="tab-price" class="section">
             <div class="card">
                 <h3>🔍 استعلام زنده قیمت کالا</h3>
-                <p>نام طرح، سایز یا برند را جستجو کنید:</p>
+                <p>نام طرح، سایز یا برند را تایپ کنید:</p>
                 <div class="form-group">
-                    <input type="text" id="search-query" placeholder="مثال: کلکته ۶۰ در ۱۲۰ آپادانا">
+                    <!-- فیلد جستجو مجهز به لیست پیشنهادی (Dropdown) -->
+                    <input type="text" id="search-query" list="tile-names" placeholder="جستجو... (مثلاً: کلکته)">
+                    <datalist id="tile-names">
+                        <option value="آرمو">
+                        <option value="الوا">
+                        <option value="ونتو">
+                        <option value="الگانزا">
+                        <option value="لیون">
+                        <option value="ایوورا">
+                        <option value="رزتا">
+                        <option value="دیموس">
+                        <option value="آکاشا">
+                        <option value="پترا">
+                        <option value="ولا">
+                        <option value="لدا">
+                        <option value="ماگو">
+                        <option value="نویر">
+                        <option value="سیه نا">
+                        <option value="آمالفی">
+                        <option value="روملو">
+                        <option value="لودی">
+                        <option value="جنووا">
+                        <option value="ولنتینو">
+                        <option value="کلکته">
+                        <option value="پاندا">
+                        <option value="بوک مچ">
+                        <option value="مارمورا">
+                        <option value="سعدی">
+                        <option value="حافظ">
+                        <option value="ارم">
+                        <option value="آپادانا">
+                    </datalist>
                 </div>
                 <button class="action-btn" onclick="sendSearch()">🔍 استعلام سریع قیمت</button>
             </div>
