@@ -70,27 +70,15 @@
     <div class="header">سیستم توزیع پیکادل سرام</div>
 
     <div class="tabs">
-        <div class="tab active" onclick="switchTab('tab-gallery')">🖼 گالری</div>
-        <div class="tab" onclick="switchTab('tab-inventory')">📦 موجودی</div>
-        <div class="tab" onclick="switchTab('tab-catalog')">📚 کاتالوگ</div>
+        <div class="tab active" onclick="switchTab('tab-inventory')">📦 موجودی</div>
+        <div class="tab" onclick="switchTab('tab-catalog')">📚 گالری و کاتالوگ</div>
         <div class="tab" onclick="switchTab('tab-calc')">🧮 محاسبه</div>
         <div class="tab" onclick="switchTab('tab-price')">📄 قیمت</div>
     </div>
 
     <div class="content-area">
-
-        <div id="tab-gallery" class="section active">
-            <div class="card">
-                <h3>🖼 جستجوی زنده تصاویر محصولات</h3>
-                <p>نام طرح یا سایز را تایپ کنید تا تصاویر برای شما در چت ارسال شود:</p>
-                <div class="form-group">
-                    <input type="text" id="photo-query" placeholder="مثال: کلکته، Panda، طوسی...">
-                </div>
-                <button class="action-btn photo-btn" onclick="sendPhotoSearch()">📸 دریافت تصاویر در چت</button>
-            </div>
-        </div>
         
-        <div id="tab-inventory" class="section">
+        <div id="tab-inventory" class="section active">
             <div class="card">
                 <h3>🏢 آپادانا سرام</h3>
                 <div class="btn-grid">
@@ -122,8 +110,48 @@
         </div>
 
         <div id="tab-catalog" class="section">
+            <!-- بخش جدید گالری عکس با قابلیت پیشنهاد خودکار (Autocomplete) -->
             <div class="card">
-                <h3>🏢 آپادانا سرام (تفکیک بر اساس سایز)</h3>
+                <h3>🖼 جستجوی زنده تصاویر محصولات</h3>
+                <p>نام طرح یا سایز را تایپ کنید تا تصاویر به صورت آلبوم برای شما ارسال شود:</p>
+                <div class="form-group">
+                    <input type="text" id="photo-query" list="photo-names" placeholder="جستجو... (مثلاً: کلکته)">
+                    <datalist id="photo-names">
+                        <option value="آرمو">
+                        <option value="الوا">
+                        <option value="ونتو">
+                        <option value="الگانزا">
+                        <option value="لیون">
+                        <option value="ایوورا">
+                        <option value="رزتا">
+                        <option value="دیموس">
+                        <option value="آکاشا">
+                        <option value="پترا">
+                        <option value="ولا">
+                        <option value="لدا">
+                        <option value="ماگو">
+                        <option value="نویر">
+                        <option value="سیه نا">
+                        <option value="آمالفی">
+                        <option value="روملو">
+                        <option value="لودی">
+                        <option value="جنووا">
+                        <option value="ولنتینو">
+                        <option value="کلکته">
+                        <option value="پاندا">
+                        <option value="بوک مچ">
+                        <option value="مارمورا">
+                        <option value="سعدی">
+                        <option value="حافظ">
+                        <option value="ارم">
+                        <option value="آپادانا">
+                    </datalist>
+                </div>
+                <button class="action-btn photo-btn" onclick="sendPhotoSearch()">📸 دریافت تصاویر در چت</button>
+            </div>
+
+            <div class="card">
+                <h3>🏢 آپادانا سرام (دانلود کاتالوگ PDF)</h3>
                 <div class="btn-grid">
                     <button onclick="sendDownload('c_apa_3030')">📥 ۳۰ در ۳۰</button>
                     <button onclick="sendDownload('c_apa_4545')">📥 ۴۵ در ۴۵</button>
