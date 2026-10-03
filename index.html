@@ -23,568 +23,139 @@
         .header {
             background-color: var(--primary); color: var(--primary-text);
             text-align: center; padding: 14px; font-weight: bold; font-size: 17px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .tabs {
             display: flex; background: var(--card-bg);
             border-bottom: 1px solid rgba(0,0,0,0.08); overflow-x: auto;
-            position: sticky; top: 0; z-index: 9;
         }
         .tab {
-            flex: 1; min-width: 70px; text-align: center; padding: 14px 4px; font-size: 12px;
+            flex: 1; min-width: 70px; text-align: center; padding: 12px 4px; font-size: 12px;
             cursor: pointer; border-bottom: 3px solid transparent;
-            color: var(--hint); font-weight: bold; white-space: nowrap; transition: 0.3s;
+            color: var(--hint); font-weight: bold; white-space: nowrap;
         }
         .tab.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
-        .content-area { flex: 1; overflow-y: auto; padding: 14px; scroll-behavior: smooth; }
-        .section { display: none; animation: fadeIn 0.4s ease; }
+        .content-area { flex: 1; overflow-y: auto; padding: 14px; }
+        .section { display: none; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         .card {
-            background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.06); transition: transform 0.2s;
+            background: var(--card-bg); border-radius: 12px; padding: 14px; margin-bottom: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05);
         }
-        .card:hover { transform: translateY(-2px); }
-        .card h3 { margin: 0 0 12px 0; font-size: 15px; color: var(--primary); display: flex; align-items: center; gap: 6px; }
-        .card p { margin: 0 0 12px 0; font-size: 12px; color: var(--hint); line-height: 1.6; }
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .card h3 { margin: 0 0 10px 0; font-size: 15px; color: var(--primary); }
+        .card p { margin: 0 0 10px 0; font-size: 12px; color: var(--hint); }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
         button {
-            padding: 12px 8px; border: none; border-radius: 8px; font-family: Tahoma; font-size: 12px; font-weight: bold;
-            background-color: var(--primary); color: var(--primary-text); cursor: pointer; 
-            transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px;
+            padding: 10px 8px; border: none; border-radius: 8px; font-family: Tahoma; font-size: 12px; font-weight: bold;
+            background-color: var(--primary); color: var(--primary-text); cursor: pointer; transition: opacity 0.2s;
         }
-        button:active { transform: scale(0.96); opacity: 0.8; }
-        button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        button:active { opacity: 0.75; }
         button.pdf-btn { background-color: #e74c3c; color: #fff; }
         button.excel-btn { background-color: #27ae60; color: #fff; }
         button.photo-btn { background-color: #8e44ad; color: #fff; }
-        button.action-btn { width: 100%; font-size: 14px; margin-top: 12px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 12px; margin-bottom: 6px; color: var(--hint); font-weight: bold; }
+        button.action-btn { width: 100%; padding: 12px; font-size: 14px; margin-top: 10px; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 12px; margin-bottom: 5px; color: var(--hint); font-weight: bold; }
         select, input {
-            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.15); background: var(--bg);
-            color: var(--text); font-family: Tahoma; font-size: 13px; transition: border 0.3s;
+            width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.15); background: var(--bg);
+            color: var(--text); font-family: Tahoma; font-size: 13px;
         }
-        select:focus, input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(36, 129, 204, 0.2); }
-        .result-box { background: rgba(36, 129, 204, 0.08); border: 1px dashed var(--primary); border-radius: 10px; padding: 14px; margin-top: 15px; font-size: 13px; line-height: 1.8; }
+        .result-box {
+            background: rgba(36, 129, 204, 0.08); border: 1px dashed var(--primary); border-radius: 10px; padding: 12px; margin-top: 15px; font-size: 13px; line-height: 1.8;
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">پرتال جامع پیکادل سرام</div>
+    <div class="header">سیستم توزیع پیکادل سرام</div>
 
     <div class="tabs">
         <div class="tab active" onclick="switchTab('tab-inventory')">📦 موجودی</div>
-        <div class="tab" onclick="switchTab('tab-catalog')">📚 گالری/کاتالوگ</div>
-        <div class="tab" onclick="switchTab('tab-calc')">🧮 محاسبه‌گر</div>
-        <div class="tab" onclick="switchTab('tab-price')">📄 استعلام قیمت</div>
+        <!-- تب دوم ادغام شده است -->
+        <div class="tab" onclick="switchTab('tab-catalog')">📚 گالری و کاتالوگ</div>
+        <div class="tab" onclick="switchTab('tab-calc')">🧮 محاسبه</div>
+        <div class="tab" onclick="switchTab('tab-price')">📄 قیمت</div>
     </div>
 
     <div class="content-area">
         
-        <!-- تب موجودی -->
+        <!-- ============ تب موجودی ============ -->
         <div id="tab-inventory" class="section active">
             <div class="card">
                 <h3>🏢 آپادانا سرام</h3>
                 <div class="btn-grid">
-                    <button class="excel-btn" onclick="sendDownload('f_apa_inv_x', this)">📊 دانلود اکسل</button>
-                    <button class="pdf-btn" onclick="sendDownload('f_apa_inv_p', this)">📄 دانلود PDF</button>
+                    <button class="excel-btn" onclick="sendDownload('f_apa_inv_x')">📊 دانلود اکسل</button>
+                    <button class="pdf-btn" onclick="sendDownload('f_apa_inv_p')">📄 دانلود PDF</button>
                 </div>
             </div>
             <div class="card">
                 <h3>🏢 کارخانه حافظ</h3>
                 <div class="btn-grid">
-                    <button class="excel-btn" onclick="sendDownload('f_haf_inv_x', this)">📊 دانلود اکسل</button>
-                    <button class="pdf-btn" onclick="sendDownload('f_haf_inv_p', this)">📄 دانلود PDF</button>
+                    <button class="excel-btn" onclick="sendDownload('f_haf_inv_x')">📊 دانلود اکسل</button>
+                    <button class="pdf-btn" onclick="sendDownload('f_haf_inv_p')">📄 دانلود PDF</button>
                 </div>
             </div>
             <div class="card">
                 <h3>🏢 ارم چهلستون</h3>
                 <div class="btn-grid">
-                    <button class="excel-btn" onclick="sendDownload('f_era_inv_x', this)">📊 دانلود اکسل</button>
-                    <button class="pdf-btn" onclick="sendDownload('f_era_inv_p', this)">📄 دانلود PDF</button>
+                    <button class="excel-btn" onclick="sendDownload('f_era_inv_x')">📊 دانلود اکسل</button>
+                    <button class="pdf-btn" onclick="sendDownload('f_era_inv_p')">📄 دانلود PDF</button>
                 </div>
             </div>
             <div class="card">
                 <h3>🏢 کارخانه سعدی</h3>
                 <div class="btn-grid">
-                    <button class="excel-btn" onclick="sendDownload('f_sad_inv_x', this)">📊 دانلود اکسل</button>
-                    <button class="pdf-btn" onclick="sendDownload('f_sad_inv_p', this)">📄 دانلود PDF</button>
+                    <button class="excel-btn" onclick="sendDownload('f_sad_inv_x')">📊 دانلود اکسل</button>
+                    <button class="pdf-btn" onclick="sendDownload('f_sad_inv_p')">📄 دانلود PDF</button>
                 </div>
             </div>
         </div>
 
-        <!-- تب گالری و کاتالوگ -->
+        <!-- ============ تب گالری و کاتالوگ (ادغام شده) ============ -->
         <div id="tab-catalog" class="section">
+            
+            <!-- بخش جستجوی عکس زنده (فارسی و انگلیسی) -->
             <div class="card">
                 <h3>🖼 گالری زنده تصاویر محصولات</h3>
                 <p>نام طرح یا سایز را تایپ کنید (فارسی یا انگلیسی):</p>
                 <div class="form-group">
                     <input type="text" id="photo-query" list="photo-names" placeholder="جستجو... (مثال: کلکته یا Panda)">
+                    
+                    <!-- این بخش به صورت خودکار توسط پایتون با نام فایل‌های شما پر می‌شود -->
                     <datalist id="photo-names">
-                        <option value="1">
-                        <option value="100100">
-                        <option value="2">
-                        <option value="20120">
-                        <option value="20241202 143550">
-                        <option value="20241202 144106">
-                        <option value="20241202 144119">
-                        <option value="20241202 144134">
-                        <option value="20241202 144140">
-                        <option value="20241202 144147">
-                        <option value="20241202 144321">
-                        <option value="20241202 144358">
-                        <option value="3">
-                        <option value="3060">
-                        <option value="3090">
-                        <option value="30x30">
-                        <option value="33100">
-                        <option value="4">
-                        <option value="40100">
-                        <option value="40120">
-                        <option value="4545">
-                        <option value="60 60ضخامت">
-                        <option value="60120">
-                        <option value="60120 chelsoton">
-                        <option value="60120 pikadel">
-                        <option value="6060">
-                        <option value="6060 THICK">
-                        <option value="60sadi">
-                        <option value="80160">
-                        <option value="8080">
-                        <option value="8080 chelsoton">
-                        <option value="ADVANCE GRAY MATT">
-                        <option value="AKASHA BLACK">
-                        <option value="AKASHA WHITE">
-                        <option value="ALL">
-                        <option value="AMPHION & ORBITAL CREAM">
-                        <option value="AMPHION CREAM">
-                        <option value="ANDROMEDA CREAM">
-                        <option value="ANID NEW WHITE">
-                        <option value="ANTARES BROWN">
-                        <option value="ANTARES GRAY">
-                        <option value="ARIEL  CREAM">
-                        <option value="ARIEL  CREAM 2">
-                        <option value="ARIEL  CREAM TRANS">
-                        <option value="ARTA BONE TRANS">
-                        <option value="AYLER BONE MATT">
-                        <option value="Adlin Light 50100">
-                        <option value="Analia Bone Matt">
-                        <option value="Analia Bone Matt 1">
-                        <option value="Anzho L.Gray 6060">
-                        <option value="Atrin  Gray 60120">
-                        <option value="BEAUTY D GRAY MATT">
-                        <option value="BEAUTY L GRAY MATT">
-                        <option value="BEAUTY OLIVE MATT">
-                        <option value="BERTIA L BLUE">
-                        <option value="BERTIA L BLUE   Copy">
-                        <option value="BETRIA D BLUE">
-                        <option value="BETRIA D BLUE   Copy">
-                        <option value="BETRIA MIX">
-                        <option value="BETRIA VERSACE">
-                        <option value="BETRIA WHITE">
-                        <option value="BONAIRE CREAM PRO">
-                        <option value="BONAIRE GRAY PRO">
-                        <option value="CARMELO CREAM matt structure">
-                        <option value="CASTOR GRAY">
-                        <option value="CRYSTAL">
-                        <option value="DARBAND 50100">
-                        <option value="DARBAND MATT 50100">
-                        <option value="DEIMOS CREAM">
-                        <option value="DEIMOS GRAY">
-                        <option value="DRACO CREAM">
-                        <option value="DRACO D GRAY">
-                        <option value="DRACO DG">
-                        <option value="DRACO L GRAY">
-                        <option value="DRACO LG 80">
-                        <option value="Darband L.Cream 6060">
-                        <option value="Datt Light Gray">
-                        <option value="Dina L.Gray 50100">
-                        <option value="Eris  Gray 60120">
-                        <option value="FABRIC WHITE">
-                        <option value="FAJR BONE MATT">
-                        <option value="Fava L.Gray 6060">
-                        <option value="GEMINI  CREAM">
-                        <option value="HARIR WHITE TRANS">
-                        <option value="Hamon 6060">
-                        <option value="Hana Cream 6060">
-                        <option value="Hermes Black matt 60120">
-                        <option value="Hermes Black trans 60120">
-                        <option value="Hermes White trans 60120">
-                        <option value="Hilda L.Gray 6060">
-                        <option value="ICARUS">
-                        <option value="IMG 20260502 115543 912">
-                        <option value="IMG 3204">
-                        <option value="IMG 3205">
-                        <option value="IMG 3206">
-                        <option value="ISEN D GRAY">
-                        <option value="ISEN L GRAY">
-                        <option value="Inteza  Gray">
-                        <option value="Inteza Cream 50100">
-                        <option value="LATINA SPECIAL 4 FACES">
-                        <option value="LEDA GOLD">
-                        <option value="LEDA GRAY">
-                        <option value="LITHOS GRAY TRANS">
-                        <option value="LORD CREAM">
-                        <option value="LORD GRAY">
-                        <option value="LORD GRAY PUNCH">
-                        <option value="Land stone">
-                        <option value="Lima Gray 60120">
-                        <option value="MAFO DG">
-                        <option value="MAGO CREAM">
-                        <option value="MAGO D GRAY">
-                        <option value="MEDOSAN MATT">
-                        <option value="MEDOSAN WHITE 3060">
-                        <option value="MERCURY CREAM">
-                        <option value="METEORITE">
-                        <option value="METEORITE COPPER PUNCH">
-                        <option value="MIACO GRAY">
-                        <option value="MINATO GRAY TRANS">
-                        <option value="Mrgarita 6060">
-                        <option value="NAJM CREAM MATT">
-                        <option value="NASA WHITE MATT">
-                        <option value="NASA WHITE TRANS">
-                        <option value="NAVI WHITE 60120">
-                        <option value="Nika Cream 6060">
-                        <option value="Nona 6060">
-                        <option value="ORBITAL CREAM">
-                        <option value="PANIA GRAY">
-                        <option value="PANIZ CREAM 4 FACES">
-                        <option value="PETRA GRAY TRANS">
-                        <option value="PETRA GRAY TRANS   Copy">
-                        <option value="PETRA L GRAY">
-                        <option value="PIKADEL">
-                        <option value="PLUTO CREAM">
-                        <option value="PLUTO GRAY">
-                        <option value="RIGEL GRAY MATT">
-                        <option value="RONIZ WHITE TRANS">
-                        <option value="ROSETA CREAM">
-                        <option value="ROSETA D GRAY">
-                        <option value="ROSETA L GRAY">
-                        <option value="ROSETTA BROWN">
-                        <option value="ROSETTA GRAY TRANS">
-                        <option value="Rasa D.Gray 60120">
-                        <option value="Rasa L.Gray 60120">
-                        <option value="Return D.Gray 50100">
-                        <option value="Return L.Cream 50100">
-                        <option value="Riona L.Gray 6060">
-                        <option value="Rohina  Gray">
-                        <option value="Rohina 6060">
-                        <option value="Rohina Gray 6060">
-                        <option value="SARAB WHITE TRANS">
-                        <option value="SATURN BONE PUNCH">
-                        <option value="SATURN CREAM PUNCH">
-                        <option value="SATURN GRAY PUNCH">
-                        <option value="SHAJAR CREAM TRANS">
-                        <option value="SHAJAR GRAY TRANS">
-                        <option value="SHILER LIGHT GRAY">
-                        <option value="SHOCO CREAM">
-                        <option value="SHOCO L CREAM MATT">
-                        <option value="SHOCO L GRAY">
-                        <option value="SHOCO L GRAY TRANS">
-                        <option value="SILVANA GRAY TRANS">
-                        <option value="SPICA GRAY">
-                        <option value="Screenshot (34)">
-                        <option value="Screenshot (35)">
-                        <option value="Screenshot (36)">
-                        <option value="Serina L.Gray 50100">
-                        <option value="Shine Cream 6060">
-                        <option value="Silvester  Gray 50100">
-                        <option value="Sparta D.Gray 6060">
-                        <option value="Sparta L.Gray 6060">
-                        <option value="TAMYAR GRAY TRANS">
-                        <option value="THERMOWOOD BROWN">
-                        <option value="THERMOWOOD D.BROWN">
-                        <option value="THERMOWOOD L.BROWN">
-                        <option value="TILA BONE MATT">
-                        <option value="TITAN COPPER PUNCH">
-                        <option value="TITAN CREAM PUNCH">
-                        <option value="TITAN GRAY PUNCH">
-                        <option value="TITO GRAY MATT">
-                        <option value="TJD CREAM">
-                        <option value="TJR CREAM">
-                        <option value="TRAVITA CREAM">
-                        <option value="Tiffany  Gray">
-                        <option value="Tiffany Light Matt">
-                        <option value="UMBRIEL  CREAM">
-                        <option value="UMBRIEL CREAM matt">
-                        <option value="VELA GRAY">
-                        <option value="VELA GRAY MATT">
-                        <option value="VELA GRAY TRANS">
-                        <option value="VILIA D CREAM TRANS">
-                        <option value="VINORA cobalt blue">
-                        <option value="Veniz Bone 6060">
-                        <option value="Viona 6060">
-                        <option value="WOODSTONE D BROWN">
-                        <option value="WOODSTONE D BROWN PUNCH">
-                        <option value="WOODSTONE GRAY">
-                        <option value="WOODSTONE GRAY PUNCH">
-                        <option value="WOODSTONE L BROWN">
-                        <option value="WOODSTONE L BROWN PUNCH">
-                        <option value="WhatsApp Image 2024 08 11 at 12.33.58 a63eccf3">
-                        <option value="WhatsApp Image 2024 10 10 at 11.13.55 5cc19c4c">
-                        <option value="WhatsApp Image 2024 10 12 at 15.33.32 52a2ac08">
-                        <option value="WhatsApp Image 2024 11 27 at 11.44.08 429e9dd8">
-                        <option value="WhatsApp Image 2024 12 08 at 14.26.59 f8b05e8b">
-                        <option value="WhatsApp Image 2025 01 06 at 15.05.39 08dbcebe">
-                        <option value="WhatsApp Image 2025 01 19 at 10.07.01 e330a697">
-                        <option value="WhatsApp Image 2026 07 21 at 12.12.18">
-                        <option value="WhatsApp Image 2026 07 21 at 13.31.36">
-                        <option value="ZETA GRAY MATT">
-                        <option value="amalfi cream">
-                        <option value="amalfi gray.">
-                        <option value="apana">
-                        <option value="apana2 (1)">
-                        <option value="apana2 (1)   Copy">
-                        <option value="apana3">
-                        <option value="apana4">
-                        <option value="apdana">
-                        <option value="armo  light gray">
-                        <option value="armo ash">
-                        <option value="armo dark gray">
-                        <option value="armo light gray">
-                        <option value="armo super light">
-                        <option value="atria">
-                        <option value="atria lg">
-                        <option value="calm mono color">
-                        <option value="calm white matt 6060">
-                        <option value="chelsoton">
-                        <option value="dina 6060">
-                        <option value="elara 60120">
-                        <option value="electra gray">
-                        <option value="elora cream">
-                        <option value="elora gray">
-                        <option value="elva dark gray">
-                        <option value="elva light gray">
-                        <option value="estrick trans">
-                        <option value="hafez">
-                        <option value="harir">
-                        <option value="hero matt 6060">
-                        <option value="hiva">
-                        <option value="icarus">
-                        <option value="ivora">
-                        <option value="jenova white">
-                        <option value="julia 60120">
-                        <option value="land ston mickel">
-                        <option value="land stone cream">
-                        <option value="landston">
-                        <option value="latina dark gray">
-                        <option value="latina dark gray 4 faces">
-                        <option value="latina light gray">
-                        <option value="latina light gray 4 faces">
-                        <option value="latina special">
-                        <option value="live photo">
-                        <option value="lodi d g">
-                        <option value="lodi l g">
-                        <option value="luna">
-                        <option value="lyon">
-                        <option value="mago lg">
-                        <option value="malga gray f">
-                        <option value="malky bone1">
-                        <option value="marka trans">
-                        <option value="medosan">
-                        <option value="medosan punch beno">
-                        <option value="melborn gray">
-                        <option value="melborn white">
-                        <option value="merga">
-                        <option value="merga L gray">
-                        <option value="merga cream">
-                        <option value="mimosa cream">
-                        <option value="mimosa gray">
-                        <option value="minato">
-                        <option value="mira black">
-                        <option value="mira cream">
-                        <option value="nasa">
-                        <option value="nasa80">
-                        <option value="ottawa DG f">
-                        <option value="ottawa LG">
-                        <option value="palaka">
-                        <option value="pania d gray">
-                        <option value="paniz cream">
-                        <option value="persian green">
-                        <option value="petra punch">
-                        <option value="petronix">
-                        <option value="photo 2025 01 20 08 49 43">
-                        <option value="photo 2025 06 25 11 23 48">
-                        <option value="photo 2025 07 14 10 08 29">
-                        <option value="photo 2025 07 14 10 11 57">
-                        <option value="photo 2025 07 14 10 12 07">
-                        <option value="photo ۲۰۲۳ ۱۱ ۲۵ ۱۵ ۵۸ ۴۵">
-                        <option value="photo ۲۰۲۴ ۰۲ ۱۳ ۱۸ ۰۱ ۰۷">
-                        <option value="photo ۲۰۲۴ ۰۲ ۲۹ ۰۹ ۴۳ ۰۴">
-                        <option value="photo ۲۰۲۴ ۰۵ ۰۷ ۱۴ ۴۴ ۵۴">
-                        <option value="photo ۲۰۲۴ ۰۵ ۰۷ ۱۴ ۴۵ ۰۰">
-                        <option value="photo ۲۰۲۴ ۰۷ ۲۸ ۲۳ ۴۲ ۱۴">
-                        <option value="photo ۲۰۲۴ ۰۷ ۲۸ ۲۳ ۴۲ ۳۷">
-                        <option value="photo ۲۰۲۴ ۰۷ ۲۸ ۲۳ ۴۲ ۵۸">
-                        <option value="photo ۲۰۲۴ ۰۷ ۲۸ ۲۳ ۴۳ ۲۳">
-                        <option value="photo ۲۰۲۴ ۰۷ ۲۸ ۲۳ ۴۳ ۵۱">
-                        <option value="photo ۲۰۲۴ ۰۸ ۱۴ ۱۰ ۲۹ ۴۰">
-                        <option value="photo ۲۰۲۴ ۰۸ ۱۷ ۱۰ ۲۱ ۲۱">
-                        <option value="photo ۲۰۲۴ ۰۸ ۱۷ ۱۰ ۲۱ ۲۱ (2)">
-                        <option value="photo ۲۰۲۴ ۰۸ ۱۷ ۱۰ ۲۳ ۳۹">
-                        <option value="photo ۲۰۲۴ ۰۸ ۱۷ ۱۰ ۲۵ ۳۶">
-                        <option value="photo ۲۰۲۴ ۰۸ ۱۷ ۱۰ ۲۵ ۳۶ (2)">
-                        <option value="photo ۲۰۲۴ ۰۸ ۲۶ ۱۳ ۱۲ ۱۴">
-                        <option value="photo ۲۰۲۴ ۰۹ ۰۷ ۱۲ ۱۲ ۱۳">
-                        <option value="photo ۲۰۲۴ ۰۹ ۱۵ ۱۲ ۵۲ ۲۵">
-                        <option value="photo ۲۰۲۴ ۰۹ ۱۵ ۱۳ ۰۳ ۵۳">
-                        <option value="photo ۲۰۲۴ ۰۹ ۱۵ ۱۳ ۰۸ ۰۸">
-                        <option value="photo ۲۰۲۴ ۰۹ ۲۸ ۱۷ ۱۲ ۰۷">
-                        <option value="photo ۲۰۲۴ ۱۰ ۱۷ ۱۴ ۰۶ ۱۶">
-                        <option value="photo ۲۰۲۴ ۱۰ ۲۹ ۱۳ ۵۳ ۱۱">
-                        <option value="romolo gray">
-                        <option value="romolo white">
-                        <option value="roniz">
-                        <option value="rosetta cream">
-                        <option value="rosetta gray">
-                        <option value="rozalin black">
-                        <option value="rozalin black 4 faces">
-                        <option value="rozalin dark gray">
-                        <option value="rozalin dark gray 4 faces">
-                        <option value="rozalin light gray">
-                        <option value="rozalin light gray 4 faces">
-                        <option value="saedi">
-                        <option value="sarab">
-                        <option value="saturn cream">
-                        <option value="saturn l.gray">
-                        <option value="serena light">
-                        <option value="serina light gray">
-                        <option value="shajar">
-                        <option value="shoco">
-                        <option value="siena">
-                        <option value="silvana">
-                        <option value="star 4 faces">
-                        <option value="stare">
-                        <option value="stephano dark">
-                        <option value="stephano l">
-                        <option value="tama 6060">
-                        <option value="tamyar">
-                        <option value="valentino cream">
-                        <option value="valentino gray">
-                        <option value="vento dark gray">
-                        <option value="vento light gray">
-                        <option value="vilia">
-                        <option value="vinora aqua">
-                        <option value="vinora black">
-                        <option value="vinora cream">
-                        <option value="vinora dark green">
-                        <option value="vinora mint">
-                        <option value="vinora siena">
-                        <option value="vinora tral">
-                        <option value="vinora white">
-                        <option value="vonora pastel green">
-                        <option value="آریل کرم براق">
-                        <option value="آریون خاکستری براق">
-                        <option value="آفرودیت خاکستری براق">
-                        <option value="آفرودیت مات">
-                        <option value="آفرودیت کرم براق">
-                        <option value="آلین خاکستری مات">
-                        <option value="آمبریل کرم براق">
-                        <option value="آگاوه کرم براق">
-                        <option value="ادونس خاکستری">
-                        <option value="اراتو قهوه ای مات">
-                        <option value="استخری">
-                        <option value="اسپیس مات">
-                        <option value="اعصاری">
-                        <option value="الورا صدفی">
-                        <option value="الورا کرم">
-                        <option value="اوربیتال کرم">
-                        <option value="اوستا">
-                        <option value="بدر کریستال مات">
-                        <option value="برتا سفید مات">
-                        <option value="جمینی کرم تیره">
-                        <option value="جمینی کرم روشن">
-                        <option value="حافظ 80">
-                        <option value="حافظ زنده">
-                        <option value="حریر سفید براق">
-                        <option value="حریر سفید مات">
-                        <option value="دراکو خاکستری تیره">
-                        <option value="دراکو خاکستری روشن">
-                        <option value="دمیترا خاکستری براق تیره">
-                        <option value="دمیترا خاکستری روشن براق">
-                        <option value="دیارا">
-                        <option value="راک استون های جمینی">
-                        <option value="ریگل خاکستری براق">
-                        <option value="ریگل مات">
-                        <option value="سعدی">
-                        <option value="سفید براق">
-                        <option value="سفید سوپر وایت">
-                        <option value="شاتل پانچ مسی">
-                        <option value="شدو">
-                        <option value="شدو خاکستری روشن">
-                        <option value="شوکو خاکستری روشن براق">
-                        <option value="شوکو کرم براق">
-                        <option value="شوکو کرم روشن مات">
-                        <option value="لرد">
-                        <option value="ماگو خاکستری تیره">
-                        <option value="ماگو خاکستری روشن">
-                        <option value="ماگو ذغالی">
-                        <option value="مرلوت">
-                        <option value="مرکوری کرم">
-                        <option value="میناتو خاکستری براق">
-                        <option value="ناسا سفید">
-                        <option value="ناسا سفید براق">
-                        <option value="ناسا سفید مات">
-                        <option value="ناسا سفید مات پانچ">
-                        <option value="ناسا مشکی براق">
-                        <option value="ناسا مشکی پانچ">
-                        <option value="ناوی مشکی براق">
-                        <option value="نبولا">
-                        <option value="نیچه کرم دیجیتال">
-                        <option value="هادس سفید براق">
-                        <option value="هس اتخوانی براق">
-                        <option value="واریا خاکستری">
-                        <option value="ویرگو کرم">
-                        <option value="پاسیفا براق">
-                        <option value="پاندورا براق">
-                        <option value="پاندورا قدیم">
-                        <option value="پایا کرم براق">
-                        <option value="پرودو نیچه">
-                        <option value="پسیفا مات خاکستری">
-                        <option value="پورشه مات">
-                        <option value="پوزیدون خاکستری براق">
-                        <option value="پیگانتو">
-                        <option value="کارملو تیره">
-                        <option value="کارملو روشن">
-                        <option value="کامت کرم">
-                        <option value="کاناپوس کرم براق">
-                        <option value="کاناپوس کرم مات">
-                        <option value="کریستال">
-                        <option value="کریستال کرم براق">
-                        <option value="کیانتی">
-                        <option value="یونا استخوانی براق">
                     </datalist>
+
                 </div>
-                <button class="action-btn photo-btn" onclick="sendPhotoSearch(this)">📸 دریافت آلبوم تصاویر در چت</button>
+                <button class="action-btn photo-btn" onclick="sendPhotoSearch()">📸 دریافت تصاویر در چت</button>
             </div>
 
+            <!-- بخش کاتالوگ‌های PDF -->
             <div class="card">
-                <h3>🏢 کاتالوگ‌های آپادانا سرام</h3>
+                <h3>🏢 آپادانا سرام (کاتالوگ PDF)</h3>
                 <div class="btn-grid">
-                    <button onclick="sendDownload('c_apa_3030', this)">📥 ۳۰ در ۳۰</button>
-                    <button onclick="sendDownload('c_apa_4545', this)">📥 ۴۵ در ۴۵</button>
-                    <button onclick="sendDownload('c_apa_6060', this)">📥 ۶۰ در ۶۰</button>
-                    <button onclick="sendDownload('c_apa_8080', this)">📥 ۸۰ در ۸۰</button>
-                    <button onclick="sendDownload('c_apa_40120', this)">📥 ۴۰ در ۱۲۰</button>
-                    <button onclick="sendDownload('c_apa_60120', this)">📥 ۶۰ در ۱۲۰</button>
-                    <button onclick="sendDownload('c_apa_3060w', this)">📥 ۳۰x۶۰ دیواری</button>
-                    <button onclick="sendDownload('c_apa_3090w', this)">📥 ۳۰x۹۰ دیواری</button>
-                    <button onclick="sendDownload('c_apa_3090v', this)">📥 ۳۰x۹۰ وینورا</button>
-                    <button onclick="sendDownload('c_apa_wall', this)">📥 دیواری عمومی</button>
+                    <button onclick="sendDownload('c_apa_3030')">📥 ۳۰ در ۳۰</button>
+                    <button onclick="sendDownload('c_apa_4545')">📥 ۴۵ در ۴۵</button>
+                    <button onclick="sendDownload('c_apa_6060')">📥 ۶۰ در ۶۰</button>
+                    <button onclick="sendDownload('c_apa_8080')">📥 ۸۰ در ۸۰</button>
+                    <button onclick="sendDownload('c_apa_40120')">📥 ۴۰ در ۱۲۰</button>
+                    <button onclick="sendDownload('c_apa_60120')">📥 ۶۰ در ۱۲۰</button>
+                    <button onclick="sendDownload('c_apa_3060w')">📥 ۳۰x۶۰ دیواری</button>
+                    <button onclick="sendDownload('c_apa_3090w')">📥 ۳۰x۹۰ دیواری</button>
+                    <button onclick="sendDownload('c_apa_3090v')">📥 ۳۰x۹۰ وینورا</button>
+                    <button onclick="sendDownload('c_apa_wall')">📥 دیواری عمومی</button>
                 </div>
             </div>
             <div class="card">
-                <h3>🏢 کاتالوگ سایر کارخانه‌ها</h3>
+                <h3>🏢 سایر کارخانه‌ها</h3>
                 <div class="btn-grid" style="grid-template-columns: 1fr;">
-                    <button onclick="sendDownload('f_haf_cat', this)">📥 کاتالوگ کارخانه حافظ</button>
-                    <button onclick="sendDownload('f_era_cat', this)">📥 کاتالوگ ارم چهلستون</button>
-                    <button onclick="sendDownload('f_sad_cat', this)">📥 کاتالوگ کارخانه سعدی</button>
+                    <button onclick="sendDownload('f_haf_cat')">📥 کاتالوگ کارخانه حافظ</button>
+                    <button onclick="sendDownload('f_era_cat')">📥 کاتالوگ ارم چهلستون</button>
+                    <button onclick="sendDownload('f_sad_cat')">📥 کاتالوگ کارخانه سعدی</button>
                 </div>
             </div>
         </div>
 
-        <!-- تب ماشین حساب -->
+        <!-- ============ تب ماشین حساب ============ -->
         <div id="tab-calc" class="section">
             <div class="card">
                 <h3>🧮 محاسبه هوشمند پالت و متراژ</h3>
@@ -602,8 +173,8 @@
                             <option value="calc_apa_3030">۳۰x۳۰ آپادانا</option>
                             <option value="calc_apa_40120">۴۰x۱۲۰ آپادانا</option>
                             <option value="calc_apa_3060_por">۳۰x۶۰ پرسلانی آپادانا</option>
-                            <option value="calc_apa_3060w_8">۳۰x۶۰ دیواری (۸ برگی)</option>
-                            <option value="calc_apa_3060w_7">۳۰x۶۰ دیواری (۷ برگی)</option>
+                            <option value="calc_apa_3060w_8">۳۰x۶۰ دیواری زمینه (۸ برگی)</option>
+                            <option value="calc_apa_3060w_7">۳۰x۶۰ دیواری زمینه (۷ برگی)</option>
                             <option value="calc_apa_3060w_punch">۳۰x۶۰ دیواری پانچ</option>
                             <option value="calc_apa_3060_sig">۳۰x۶۰ سیگاری</option>
                             <option value="calc_apa_3090w_punch">۳۰x۹۰ دیواری پانچ</option>
@@ -636,31 +207,41 @@
                     <input type="number" id="calc-val" placeholder="مثلاً: 120" oninput="runCalculation()">
                 </div>
                 <div id="calc-result" class="result-box" style="display: none;"></div>
-                <button id="add-to-cart-btn" class="action-btn" style="display: none; background-color: #27ae60;" onclick="addCalculatedToCart(this)">🛒 افزودن به سبد سفارش</button>
+                <button id="add-to-cart-btn" class="action-btn" style="display: none;" onclick="addCalculatedToCart()">🛒 افزودن همین مورد به سفارش</button>
             </div>
         </div>
 
-        <!-- تب قیمت -->
+        <!-- ============ تب استعلام قیمت ============ -->
         <div id="tab-price" class="section">
             <div class="card">
-                <h3>🔍 موتور جستجوی هوشمند قیمت</h3>
-                <p>نام طرح، سایز یا برند را وارد کنید:</p>
+                <h3>🔍 استعلام زنده قیمت کالا</h3>
+                <p>نام طرح، سایز یا برند را تایپ کنید:</p>
                 <div class="form-group">
-                    <input type="text" id="search-query" list="price-names" placeholder="مثال: آرمو یا کلکته ۶۰*۱۲۰">
+                    <!-- به صورت پیش‌فرض چند اسم پرکاربرد برای قیمت قرار داده شده است -->
+                    <input type="text" id="search-query" list="price-names" placeholder="جستجو... (مثلاً: کلکته یا آرمو)">
                     <datalist id="price-names">
-                        <option value="آرمو"><option value="الوا"><option value="ونتو"><option value="رزتا"><option value="دیموس"><option value="پاندا"><option value="سیه نا"><option value="آمالفی"><option value="ولنتینو"><option value="کلکته">
+                        <option value="آرمو">
+                        <option value="الوا">
+                        <option value="ونتو">
+                        <option value="رزتا">
+                        <option value="دیموس">
+                        <option value="پاندا">
+                        <option value="سیه نا">
+                        <option value="آمالفی">
+                        <option value="ولنتینو">
+                        <option value="کلکته">
                     </datalist>
                 </div>
-                <button class="action-btn" onclick="sendSearch(this)">🔍 استعلام آنی قیمت</button>
+                <button class="action-btn" onclick="sendSearch()">🔍 استعلام سریع قیمت</button>
             </div>
             
             <div class="card">
-                <h3>📄 دریافت فایل لیست قیمت کامل (PDF)</h3>
+                <h3>📄 دریافت لیست قیمت کامل (PDF)</h3>
                 <div class="btn-grid" style="grid-template-columns: 1fr;">
-                    <button onclick="sendDownload('f_apa_pri', this)">📥 قیمت آپادانا سرام</button>
-                    <button onclick="sendDownload('f_haf_pri', this)">📥 قیمت کارخانه حافظ</button>
-                    <button onclick="sendDownload('f_era_pri', this)">📥 قیمت ارم چهلستون</button>
-                    <button onclick="sendDownload('f_sad_pri', this)">📥 قیمت کارخانه سعدی</button>
+                    <button onclick="sendDownload('f_apa_pri')">📥 لیست قیمت کارخانه آپادانا</button>
+                    <button onclick="sendDownload('f_haf_pri')">📥 لیست قیمت کارخانه حافظ</button>
+                    <button onclick="sendDownload('f_era_pri')">📥 لیست قیمت ارم چهلستون</button>
+                    <button onclick="sendDownload('f_sad_pri')">📥 لیست قیمت کارخانه سعدی</button>
                 </div>
             </div>
         </div>
@@ -670,19 +251,6 @@
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-
-        // بازخورد لمسی (Haptic) بومی تلگرام
-        function triggerHaptic() {
-            if (tg.HapticFeedback) { tg.HapticFeedback.impactOccurred('light'); }
-        }
-
-        // قفل کردن دکمه برای جلوگیری از اسپم کلیک
-        function lockButton(btn, loadingText = "⏳ لطفا صبر کنید...") {
-            if(!btn) return;
-            btn.dataset.originalText = btn.innerText;
-            btn.innerText = loadingText;
-            btn.disabled = true;
-        }
 
         const PALLET_DB = {
             'calc_apa_6060_10': { name: '۶۰x۶۰ (۱۰ میل) آپادانا', sqm: 1.44, box: 64, weight: 2000 },
@@ -714,32 +282,25 @@
         let selectedProductKey = '';
 
         function switchTab(tabId) {
-            triggerHaptic();
             document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
 
-        function sendDownload(key, btn) {
-            triggerHaptic();
-            lockButton(btn, "⏳ ارسال...");
+        function sendDownload(key) {
             tg.sendData(JSON.stringify({ type: 'download', key: key }));
         }
 
-        function sendSearch(btn) {
-            triggerHaptic();
+        function sendSearch() {
             const query = document.getElementById('search-query').value;
             if (query.trim() === '') return;
-            lockButton(btn, "🔍 در حال استعلام...");
             tg.sendData(JSON.stringify({ type: 'search_price', query: query }));
         }
 
-        function sendPhotoSearch(btn) {
-            triggerHaptic();
+        function sendPhotoSearch() {
             const query = document.getElementById('photo-query').value;
             if (query.trim() === '') return;
-            lockButton(btn, "📸 در حال استخراج...");
             tg.sendData(JSON.stringify({ type: 'search_photo', query: query }));
         }
 
@@ -754,7 +315,9 @@
             selectedProductKey = key;
             inputLabel.innerText = mode === 'sqm_to_pal' ? 'مقدار درخواستی (متر مربع):' : 'تعداد درخواستی (پالت):';
 
-            if (!val || val <= 0) { resBox.style.display = 'none'; addBtn.style.display = 'none'; return; }
+            if (!val || val <= 0) {
+                resBox.style.display = 'none'; addBtn.style.display = 'none'; return;
+            }
 
             const item = PALLET_DB[key];
             const sqmPerPallet = item.sqm * item.box;
@@ -764,24 +327,22 @@
                 calculatedPallets = Math.max(1, Math.round(val / sqmPerPallet));
                 const totalSqm = (calculatedPallets * sqmPerPallet).toFixed(2);
                 const totalBoxes = calculatedPallets * item.box;
-                resultHtml = `<b>🎯 نتیجه متراژ به پالت:</b><br>▫️ پیشنهاد رند کارخانه: <b>${calculatedPallets} پالت</b><br>▫️ متراژ دقیق: <b>${totalSqm} متر مربع</b><br>▫️ تعداد کل کارتن: <b>${totalBoxes} کارتن</b>`;
+                const totalWeight = Math.round(calculatedPallets * item.weight);
+                resultHtml = `<b>🎯 نتیجه تبدیل متراژ به پالت:</b><br>▫️ پیشنهاد رند کارخانه: <b>${calculatedPallets} پالت</b><br>▫️ متراژ دقیق تحویلی: <b>${totalSqm} متر مربع</b><br>▫️ تعداد کل کارتن: <b>${totalBoxes} کارتن</b><br>▫️ وزن تخمینی بار: <b>${totalWeight} کیلوگرم</b>`;
             } else {
                 calculatedPallets = val;
                 const totalSqm = (val * sqmPerPallet).toFixed(2);
                 const totalBoxes = Math.ceil(val * item.box);
-                resultHtml = `<b>🎯 نتیجه پالت به متراژ:</b><br>▫️ تعداد پالت درخواستی: <b>${val} پالت</b><br>▫️ متراژ کل: <b>${totalSqm} متر مربع</b><br>▫️ تعداد کارتن: <b>${totalBoxes} کارتن</b>`;
+                const totalWeight = Math.round(val * item.weight);
+                resultHtml = `<b>🎯 نتیجه تبدیل پالت به متراژ:</b><br>▫️ تعداد پالت درخواستی: <b>${val} پالت</b><br>▫️ متراژ کل: <b>${totalSqm} متر مربع</b><br>▫️ تعداد کارتن: <b>${totalBoxes} کارتن</b><br>▫️ وزن تخمینی بار: <b>${totalWeight} کیلوگرم</b>`;
             }
 
             resBox.innerHTML = resultHtml;
             resBox.style.display = 'block'; addBtn.style.display = 'block';
         }
 
-        function addCalculatedToCart(btn) {
-            triggerHaptic();
-            lockButton(btn, "✅ اضافه شد!");
-            tg.showAlert('🛒 مورد درخواستی با موفقیت به سبد سفارش شما افزوده شد.\nجهت تایید نهایی به ربات بازگردید.', function() {
-                tg.sendData(JSON.stringify({ type: 'calc_add', key: selectedProductKey, pallets: calculatedPallets }));
-            });
+        function addCalculatedToCart() {
+            tg.sendData(JSON.stringify({ type: 'calc_add', key: selectedProductKey, pallets: calculatedPallets }));
         }
     </script>
 </body>
